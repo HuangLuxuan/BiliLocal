@@ -132,6 +132,8 @@ List::List(QObject *parent)
 		item->setData(info.absoluteFilePath(), FileRole);
 		item->setData(data["Time"].toDouble(), TimeRole);
 		item->setData(data["Date"].toString(), DateRole);
+        QJsonValue subtitle=data["SubTitle"];
+        item->setData(subtitle.isUndefined()?"":subtitle.toString(),SubtitleRole);
 		item->setEditable(false); item->setDropEnabled(false);
 		QJsonValue danm = data["Danm"];
 		if (danm.isArray()){
@@ -157,7 +159,7 @@ List::List(QObject *parent)
 		time = _time;
 	});
 	connect(lApp->findObject<APlayer>(), &APlayer::mediaChanged, [this](QString file){
-		updateCurrent();
+        updateCurrent();
 		QStandardItem *old = cur;
 		cur = itemFromFile(file, true);
 		if (old){
@@ -173,7 +175,8 @@ List::List(QObject *parent)
 			break;;
 		case Surmise:
 			for (int i = 1;; i++){
-				QStandardItem *head = item(cur->row() - i);
+                QStandardItem *head = item(cur->row() - i);
+                if(!head)break;
 				if (head->data(CodeRole).toInt() != Records){
 					continue;
 				}
@@ -193,6 +196,9 @@ List::List(QObject *parent)
 			break;
 		case Records:
 		{
+            QVariant subtitle=cur->data(SubtitleRole);
+            if(subtitle.isValid())
+                lApp->findObject<APlayer>()->addSubtitle(subtitle.toString());
 			QFileInfo info(cur->data(FileRole).toString());
 			for (int i = 0; i < cur->rowCount(); ++i){
 				Load *load = lApp->findObject<Load>();
@@ -417,13 +423,17 @@ void List::appendMedia(QString file)
 	itemFromFile(file, true);
 }
 
-void List::updateCurrent()
+void List::updateCurrent()//更新当前播放的视频在播放列表中的信息
 {
 	if (!cur){
+        currentSubtitleFile="";
 		return;
 	}
 	cur->setRowCount(0);
 	cur->setData(time, TimeRole);
+    if(currentSubtitleFile.length()>0)
+        cur->setData(currentSubtitleFile,SubtitleRole);
+    currentSubtitleFile="";
 	if (cur->data(CodeRole).toInt() != Records){
 		return;
 	}
@@ -547,6 +557,9 @@ void List::save()
 		data["File"] = item->data(FileRole).toString();
 		data["Time"] = item->data(TimeRole).toDouble();
 		data["Date"] = item->data(DateRole).toString();
+        QVariant subtitle=item->data(SubtitleRole);
+        if(subtitle.isValid())
+            data["SubTitle"]=subtitle.toString();
 		switch (item->data(CodeRole).toInt()) {
 		case Records:
 		{

@@ -235,7 +235,7 @@ namespace
 		return (int)n + (n > (int)n);
 	}
 
-	class Process : public QRunnable
+    class Process : public QRunnable//用于安排有同样可选位置且有相同几何大小的弹幕
 	{
 	public:
 		static const int Priority = 2;
@@ -274,23 +274,23 @@ namespace
 			default:
 			{
 				//弹幕自动定位
-				QVarLengthArray<int> thick(meta.rect.size());
+                QVarLengthArray<int> thick(meta.rect.size());//全部可选位置的密集程度
 				std::fill(thick.begin(), thick.end(), 0);
 				//计算每个位置的拥挤程度
-				auto calculate = [&](Graphic *against) {
+                auto calculate = [&](Graphic *against) {//让可选位置和现有的弹幕against去碰撞
 					Graphic *compare = wait.front() == against ? wait.last() : wait.front();
 					Q_ASSERT(compare->getMode() == meta.mode && against->getMode() == meta.mode);
 					const QRectF &rect = against->currentRect();
 					const QRectF &from = meta.rect.at(0);
 					double stp = meta.rect.at(1).top() - from.top();
-					double off = stp > 0 ? (rect.top() - from.top()) : (rect.bottom() - from.bottom());
-					double len = rect.height() + from.height();
-					int sta = qMax(lower(off / stp), 0);
-					int end = qMin(upper(len / qAbs(stp) + sta), thick.size());
+                    double off = stp > 0 ? (rect.top() - from.top()) : (rect.bottom() - from.bottom());
+                    double len = rect.height() + from.height();//相交的高度的最大值
+                    int sta = qMax(lower(off / stp), 0);//从第sta个可选位置开始
+                    int end = qMin(upper(len / qAbs(stp) + sta), thick.size());
 					QRectF &iter = compare->currentRect(), back = iter;
 					for (; sta < end; ++sta) {
 						iter = meta.rect.at(sta);
-						thick[sta] += compare->intersects(against);
+                        thick[sta] += compare->intersects(against);//碰撞
 					}
 					iter = back;
 				};
@@ -315,14 +315,14 @@ namespace
 					else break;
 				}
 				//挑选最空闲的位置
-				for (Graphic *iter : wait) {
-					int thin = std::min_element(thick.begin(), thick.end()) - thick.begin();
-					iter->currentRect() = meta.rect[thin];
+                for (Graphic *iter : wait) {//依次处理这批所有待处理的弹幕
+                    int thin = std::min_element(thick.begin(), thick.end()) - thick.begin();//获取密度最低地方
+                    iter->currentRect() = meta.rect[thin];//为其安排密度最低的位置
 					iter->setIndex();
 					iter->setEnabled(true);
 					priv->wait--;
-					priv->draw.append(iter);
-					calculate(iter);
+                    priv->draw.append(iter);//变成已有弹幕了
+                    calculate(iter);//让这个弹幕和其余再去碰撞
 				}
 				priv->lock.unlock();
 			}
@@ -335,7 +335,7 @@ namespace
 		QList<Graphic *> wait;
 	};
 
-	class Prepare : public QRunnable
+    class Prepare : public QRunnable//用于处理某一时刻新增的过滤过的弹幕
 	{
 	public:
 		static const int Priority = 0;
@@ -366,7 +366,7 @@ namespace
 			for (const Comment *iter : wait) {
 				try {
 					Graphic *graphic = Graphic::create(*iter);
-					slot[CreateMeta(graphic)].append(graphic);
+                    slot[CreateMeta(graphic)].append(graphic);//将有同样可选位置且有同样几何大小的弹幕放一起
 				}
 				catch (Graphic::format_unrecognized) {
 					//自带弹幕系统未识别，通知插件处理

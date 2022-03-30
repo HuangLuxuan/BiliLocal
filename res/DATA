@@ -57,5 +57,5 @@
 	    "OpenGL": "https://www.khronos.org/assets/uploads/ceimg/made/assets/uploads/apis/OpenGL-ES_300_199_75.png",
 		"VLC": "http://images.videolan.org/images/logoOrange.png"
 	},
-    "Version": "0.4.2"
+    "Version": "0.5.0.1"
 }

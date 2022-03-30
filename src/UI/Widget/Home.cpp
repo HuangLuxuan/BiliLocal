@@ -235,13 +235,23 @@ Home::Home(QWidget *parent)
 	addAction(quitA);
 	connect(quitA, &QAction::triggered, this, &Home::close);
 
+    helpA = new QAction("帮助",this);
+    helpA->setObjectName("帮助");
+    addAction(helpA);
+    connect(helpA,&QAction::triggered,[](){HelpWindow::getHelpWindow();});
+
 	fullA = new QAction(tr("Full Screen"), this);
 	fullA->setObjectName("Full");
 	fullA->setCheckable(true);
 	fullA->setShortcut(Config::getValue("/Shortcut/Full", QString("F")));
 	addAction(fullA);
 	connect(fullA, &QAction::toggled, [this](bool b) {
-		b ? showFullScreen() : showNormal();
+        HWND hwnd=(HWND)winId();
+        LONG winStyle=GetWindowLongW(hwnd,GWL_STYLE);
+        winStyle&=WS_DISABLED; //把disabled过滤出来
+        b ? showFullScreen() : showNormal();
+        winStyle|=GetWindowLongW(hwnd,GWL_STYLE) & (~WS_DISABLED); //把其它Style留下
+        SetWindowLongW(hwnd,GWL_STYLE,winStyle); //这样就不会因为切换全屏而导致modal（模态）问题
 	});
 
 	confA = new QAction(tr("Config"), this);
@@ -589,7 +599,9 @@ void Home::mouseReleaseEvent(QMouseEvent * e)
 
 void Home::resizeEvent(QResizeEvent * e)
 {
-	const QSize size = e->size();
+    //const QSize size = e->size();
+    // https://stackoverflow.com/questions/52157587/why-qresizeevent-qwidgetsize-gives-different-when-fullscreen
+    const QSize size = QWidget::size();
 	arender->resize(size);
 	int w = size.width(), h = size.height();
 	menu->terminate();
@@ -650,7 +662,8 @@ void Home::setGeometry(QSize size, bool center)
 	}
 	if (r.width() >= s.width() || r.height() >= s.height()) {
 		if (isVisible()) {
-			fullA->setChecked(true);
+            fullA->setChecked(true);//Qt5.12.9+MinGW32当有子窗口打开的时候切换到全屏会导致还原后主窗口被禁用
+                                    //特殊方法已修复
 			return;
 		}
 		else {
@@ -815,6 +828,7 @@ void Home::showContextMenu(QPoint p)
 		top.addMenu(&dmk);
 		top.addAction(confA);
 		top.addAction(quitA);
+        top.addAction(helpA);
 		top.exec(mapToGlobal(p));
 	}
 }

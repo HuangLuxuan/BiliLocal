@@ -62,8 +62,14 @@ public:
 		std::function<void(QNetworkReply *)> process;
 	};
 
+    enum ExtraFlag{
+        NoneFlag=0,
+        ClearDanmaku=1
+    };
+
 	struct Task
 	{
+        ExtraFlag extraFlag=NoneFlag;
 		QString code;
 		QNetworkRequest request;
 		int state;
@@ -95,7 +101,7 @@ public slots:
 	bool canFull(const Record *);
 	bool canHist(const Record *);
 
-	void loadDanmaku(QString);
+    void loadDanmaku(QString,bool overRideClearDanmaku2NoneFlag=false);
 	void loadDanmaku(const QModelIndex &index = QModelIndex());
 	void fullDanmaku(const Record *);
 	void loadHistory(const Record *, QDate);

@@ -38,7 +38,8 @@ public:
 		FileRole = Qt::UserRole,
 		CodeRole,
 		TimeRole,
-		DateRole
+        DateRole,
+        SubtitleRole
 	};
 
 	enum Danm
@@ -53,6 +54,7 @@ public:
 	QStringList mimeTypes() const;
 	QMimeData  *mimeData(const QModelIndexList &) const;
 	bool    dropMimeData(const QMimeData *, Qt::DropAction, int, int, const QModelIndex &p);
+    QString currentSubtitleFile;
 
 private:
 	QStandardItem *cur;

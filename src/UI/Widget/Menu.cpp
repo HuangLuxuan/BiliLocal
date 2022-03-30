@@ -407,7 +407,7 @@ QWidget(parent)
 	danmA->setShortcut(Config::getValue("/Shortcut/Danm", QString()));
 	sechA = new QAction(tr("Search Danmaku"), this);
 	sechA->setObjectName("Sech");
-	sechA->setShortcut(Config::getValue("/Shortcut/Sech", QString()));
+    sechA->setShortcut(Config::getValue("/Shortcut/Sech", QString()));
 	connect(fileA, &QAction::triggered, [this](){
 		QString _file = QFileDialog::getOpenFileName(
 			lApp->findObject<Interface>()->widget(),
@@ -460,7 +460,7 @@ QWidget(parent)
 	connect(danmB, &QPushButton::clicked, danmA, &QAction::trigger);
 	connect(sechB, &QPushButton::clicked, sechA, &QAction::trigger);
 	connect(danmL, &QLineEdit::returnPressed, danmA, &QAction::trigger);
-	connect(sechL, &QLineEdit::returnPressed, sechA, &QAction::trigger);
+    connect(sechL, &QLineEdit::returnPressed, sechA, &QAction::trigger);
 	alphaT = new QLabel(this);
 	alphaT->setText(tr("Danmaku Alpha"));
 	alphaS = new QSlider(this);
@@ -594,7 +594,7 @@ void Menu::resizeEvent(QResizeEvent *e)
 	int l = 15 * logicalDpiX() / 96, o = delayL->geometry().center().x() - l / 2;
 	localC->setGeometry(o, 20.00*y, l, 2.08*y);
 	subC->setGeometry(o, 22.92*y, l, 2.08*y);
-	loopC->setGeometry(o, 25.83*y, l, 2.08*y);
+    loopC->setGeometry(o, 25.83*y, l, 2.08*y);
 }
 
 bool Menu::eventFilter(QObject *o, QEvent *e)

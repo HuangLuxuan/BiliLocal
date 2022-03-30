@@ -19,25 +19,26 @@ Mode7::Mode7(const Comment &comment)
 	}
 	QSize size = lApp->findObject<ARender>()->getActualSize();
 	auto getDouble = [&data](int i){return data.at(i).toVariant().toDouble(); };
-	double scale = getScale(comment.mode, comment.date, size);
-	bPos = QPointF(getDouble(0), getDouble(1));
-	ePos = l < 8 ? bPos : QPointF(getDouble(7), getDouble(8));
+    double scale = getScale(comment.mode, comment.date, size);//当前播放器是B站播放器（？）大小的几倍
+    bPos = QPointF(getDouble(0), getDouble(1));//开始坐标？
+    ePos = l < 8 ? bPos : QPointF(getDouble(7), getDouble(8));//结束坐标？
 	int w = size.width(), h = size.height();
-	if (bPos.x() < 1 && bPos.y() < 1 && ePos.x() < 1 && ePos.y() < 1){
+    if (bPos.x() < 1 && bPos.y() < 1 && ePos.x() < 1 && ePos.y() < 1){//相对大小转换为绝对大小
 		bPos.rx() *= w;
 		ePos.rx() *= w;
 		bPos.ry() *= h;
 		ePos.ry() *= h;
 		scale = 1;
 	}
-	else if (scale == 0){
+    else if (scale == 0){//不变换
 		scale = 1;
 	}
 	else{
-		QSizeF player = getPlayer(comment.date);
-		QPoint offset = QPoint((w - player.width()*scale) / 2, (h - player.height()*scale) / 2);
+        QSizeF player = getPlayer(comment.date);//B站播放器大小？
+        QPoint offset = QPoint((w - player.width()*scale) / 2, (h - player.height()*scale) / 2);//将缩放后的B站播放器放在当前播放器(0,0)位置
+                                                                                                //则该值为从缩放后的B站播放器的中心到当前播放器中心的向量
 		bPos = bPos*scale + offset;
-		ePos = ePos*scale + offset;
+        ePos = ePos*scale + offset;//进行变换
 	}
 	QStringList alpha = data[2].toString().split('-');
 	bAlpha = alpha[0].toDouble();

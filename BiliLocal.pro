@@ -5,6 +5,7 @@ QT += \
     concurrent
 
 TARGET = BiliLocal
+VERSION = 0.5.0.1
 
 TEMPLATE = app
 
@@ -25,6 +26,7 @@ SOURCES += \
     src/Graphic/Mode6.cpp \
     src/Graphic/Mode7.cpp \
     src/Graphic/Plain.cpp \
+    src/HelpWindow.cpp \
     src/Model/Danmaku.cpp \
     src/Model/Running.cpp \
     src/Model/List.cpp \
@@ -55,6 +57,8 @@ HEADERS += \
     src/Graphic/Mode6.h \
     src/Graphic/Mode7.h \
     src/Graphic/Plain.h \
+    src/HelpWindow.h \
+    src/HelpWindowRes.h \
     src/Model/Danmaku.h \
     src/Model/Running.h \
     src/Model/List.h \
@@ -135,8 +139,12 @@ DEPENDPATH += \
 }
 
 LIBS += \
-    -llibeay32 \
-    -lssleay32
+#    -llibeay32 \
+#    -lssleay32
+# Since version 1.1.0 OpenSSL have changed their library names from: libeay32.dll -> libcrypto.dll ssleay32.dll -> libssl.dll
+# OpenSSL V1.1.0之后动态链接库更名：libeay32.dll -> libcrypto.dll ssleay32.dll -> libssl.dll
+    -llibcrypto \
+    -llibssl
 }
 
 macx{
@@ -248,8 +256,10 @@ HEADERS += \
     src/Render/Raster/AsyncRasterSprite.h
 
 LIBS += \
-    -lswscale \
-    -lavutil
+#    -lswscale \
+#    -lavutil
+#    -lavformat -lavdevice -lavcodec -lavutil -lswresample
+    -lavutil -lswscale
 
 message(enable raster render widget output)
 }
@@ -330,3 +340,45 @@ HEADERS += \
 
 message(enable nplayer dummy backend)
 }
+
+#RC_FILE += res/HelpWindowResources.rc
+HelpWindowResources.target = HelpWindowResources.o
+HelpWindowResources.depends = $$PWD/res/HelpWindowResources.rc \
+    $$PWD/res/HelpWindowRes/HelpCmdExample.rtf \
+    $$PWD/res/HelpWindowRes/HelpIntro.rtf \
+    $$PWD/res/HelpWindowRes/HelpCmd.rtf \
+    $$PWD/res/HelpWindowRes/HelpConfigJSON.rtf \
+    $$PWD/src/Render/OpenGL/OpenGLRender.cpp \
+    $$PWD/src/Render/Raster/AsyncRasterSprite.cpp \
+    $$PWD/res/HelpWindowRes/THEFUCKINGCURSEDSHITTYQT.rtf \
+    $$PWD/src/Access/Parse.cpp \
+    $$PWD/src/Model/Running.cpp \
+    $$PWD/res/HelpWindowRes/HelpFAQ.rtf \
+    $$PWD/res/HelpWindowRes/HelpInterface.rtf
+HelpWindowResources.commands = windres -i $$PWD/res/HelpWindowResources.rc -o $$HelpWindowResources.target --include-dir=. $(DEFINES)
+QMAKE_EXTRA_TARGETS += HelpWindowResources
+OBJECTS += $$HelpWindowResources.target
+
+LIBS+=libgdi32
+
+DISTFILES += res/HelpWindowResources.rc \
+    res/HelpWindowRes/HelpCmdExample.rtf \
+    res/HelpWindowRes/HelpIntro.rtf \
+    res/HelpWindowRes/HelpCmd.rtf \
+    res/HelpWindowRes/HelpConfigJSON.rtf \
+    res/HelpWindowRes/THEFUCKINGCURSEDSHITTYQT.rtf \
+    res/HelpWindowRes/HelpFAQ.rtf \
+    res/HelpWindowRes/HelpInterface.rtf
+
+#libvlc-3.0.9.2-win32
+LIBS += -L'I:/Program Files (x86)/vlc-3.0.9.2-win32/sdk/lib/'
+INCLUDEPATH += 'I:/Program Files (x86)/vlc-3.0.9.2-win32/sdk/include'
+DEPENDPATH += 'I:/Program Files (x86)/vlc-3.0.9.2-win32/sdk/include'
+#openssl-3.0.2-win32
+LIBS += -L'I:/Program Files (x86)/OpenSSL-Win32/lib/'
+INCLUDEPATH += 'I:/Program Files (x86)/OpenSSL-Win32/include'
+DEPENDPATH += 'I:/Program Files (x86)/OpenSSL-Win32/include'
+#ffmpeg-5.0-win32
+LIBS += -L'I:/Program Files (x86)/ffmpeg-n5.0-win32-shared/bin/'
+INCLUDEPATH += 'I:/Program Files (x86)/ffmpeg-n5.0-win32-shared/bin/include'
+DEPENDPATH += 'I:/Program Files (x86)/ffmpeg-n5.0-win32-shared/bin/include'

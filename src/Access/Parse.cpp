@@ -142,18 +142,18 @@ Parse::ResultDelegate Parse::parseComment(const QByteArray &data, Utils::Site si
 				//strtof/strtoi need char * ?!
 				char *arg = const_cast<char *>(raw.first) + 6;
 				int time = std::strtod(arg, &arg) * 1000 + 0.5;
+                comment.time = time;
 				if (*(arg++) != ',') return comment;
 				int mode = std::strtol(arg, &arg, 10);
+                comment.mode = mode;
 				if (*(arg++) != ',') return comment;
 				int font = std::strtol(arg, &arg, 10);
+                comment.font = font;
 				if (*(arg++) != ',') return comment;
 				int colo = std::strtol(arg, &arg, 10);
+                comment.color = colo;
 				if (*(arg++) != ',') return comment;
-				int date = std::strtol(arg, &arg, 10);
-				comment.mode = mode;
-				comment.font = font;
-				comment.color = colo;
-				comment.time = time;
+                int date = std::strtol(arg, &arg, 10);
 				comment.date = date;
 				auto num = 4;
 				auto end = *(raw.first + 5);

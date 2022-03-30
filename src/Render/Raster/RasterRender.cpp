@@ -8,7 +8,11 @@
 #include "../../Local.h"
 #include "../../Player/APlayer.h"
 #include "../../UI/Interface.h"
-
+extern "C"
+{
+#include <libavutil/imgutils.h>
+#include <libswscale/swscale.h>
+}
 RasterRender::RasterRender(QObject *parent)
 	: ARender(parent)
 {

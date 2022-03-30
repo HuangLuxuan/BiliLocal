@@ -21,6 +21,7 @@
 #include "../../Render/ARender.h"
 #include <QtCore>
 #include <QtWidgets>
+#include<HelpWindow.h>
 
 namespace UI
 {
@@ -43,6 +44,7 @@ namespace UI
 		QAction *toggA;
 		QAction *listA;
 		QAction *postA;
+        QAction *helpA;
 		QMenu *rat;
 		QMenu *sca;
 		QMenu *spd;

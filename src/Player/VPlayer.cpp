@@ -7,10 +7,11 @@
 #include "../Render/ABuffer.h"
 #include "../Render/PFormat.h"
 #include <functional>
+#include <string>
 
 namespace
 {
-	QMutex time;
+    QMutex qmutex_time;
 
 	class PixelBuffer : public ABuffer
 	{
@@ -183,12 +184,12 @@ namespace
 	}
 
 	void mid(const libvlc_event_t *, void *)
-	{
-		if (::time.tryLock()) {
+    {
+        if (::qmutex_time.tryLock()) {
 			QMetaObject::invokeMethod(lApp->findObject<APlayer>(),
 				"timeChanged",
 				Q_ARG(qint64, lApp->findObject<APlayer>()->getTime()));
-			::time.unlock();
+            ::qmutex_time.unlock();
 		}
 	}
 
@@ -221,8 +222,22 @@ VPlayer::VPlayer(QObject *parent)
 	for (int i = 0; i < args.size(); ++i){
 		argv[i] = args[i].data();
 	}
-	vlc = libvlc_new(argv.size(), argv.data());
+    vlc = libvlc_new(argv.size(), argv.data());
 #ifdef Q_OS_WIN
+    if(!vlc){
+        std::wstring str(L"libvlc_new(argc,argv)返回了空指针。argc=");
+        str+=std::to_wstring(argv.size());
+        str+=L"argv=";
+        for (int i = 0; i < args.size(); ++i){
+            std::string str1("\n");
+            str1+=args[i].data();
+            std::wstring str2;
+            str2.assign(str1.begin(),str1.end());
+            str+=str2;
+        }
+        MessageBoxW(GetForegroundWindow(),str.c_str(),L"严重错误",0x10L);
+        exit(-1);
+    }
 	libvlc_add_intf(vlc, "bililocal");
 #endif
 	mp = nullptr;
@@ -254,7 +269,11 @@ void VPlayer::init()
 				}
 				parseTracks(Utils::Video);
 				parseTracks(Utils::Audio);
-				parseTracks(Utils::Subtitle);
+                parseTracks(Utils::Subtitle);
+                //接下来将待加载的字幕文件加载进来
+                while(pendingSubtitleFiles.size()>0){
+                    addSubtitle_internal(pendingSubtitleFiles.dequeue());
+                }
 				emit begin();
 				break;
 			}
@@ -353,7 +372,7 @@ void VPlayer::parseTracks(Utils::Type type)
 			slot->current = fake;
 		}
 		slot->list.append({ name , func });
-	}
+    }
 	libvlc_track_description_list_release(head);
 }
 
@@ -392,11 +411,11 @@ void VPlayer::setTime(qint64 _time)
 			}
 		}
 		else{
-			::time.lock();
+            ::qmutex_time.lock();
 			qApp->processEvents();
 			emit jumped(_time);
 			libvlc_media_player_set_time(mp, qBound<qint64>(0, _time, getDuration()));
-			::time.unlock();
+            ::qmutex_time.unlock();
 		}
 	}
 }
@@ -582,23 +601,34 @@ QStringList VPlayer::getTracks(int type)
 
 void VPlayer::addSubtitle(QString file)
 {
-	if (mp){
-		QList<Track> &list = tracks[2].list;
-		if (list.isEmpty()) {
-			list.prepend({
-				APlayer::tr("Disable"),
-				[this]() { libvlc_video_set_spu(mp, -1); }
-			});
-		}
-		QFileInfo info(file);
-		auto n = info.fileName();
-		auto f = QDir::toNativeSeparators(info.absoluteFilePath()).toUtf8();
-		std::function<void()> s = [=]() {
-			libvlc_video_set_subtitle_file(mp, f);
-		};
-		list.append({ n, s });
-		s();
-	}
+    if (mp){
+        if(getState()==Stop){
+            pendingSubtitleFiles.enqueue(file);
+        }
+        else
+            addSubtitle_internal(file);
+    }
+}
+
+void VPlayer::addSubtitle_internal(QString file)
+{
+    if (mp){
+        QList<Track> &list = tracks[2].list;
+        if (list.isEmpty()) {
+            list.prepend({
+                APlayer::tr("Disable"),
+                [this]() { libvlc_video_set_spu(mp, -1); }
+            });
+        }
+        QFileInfo info(file);
+        auto n = info.fileName();
+        auto f = QDir::toNativeSeparators(info.absoluteFilePath()).toUtf8();
+        std::function<void()> s = [=]() {
+            libvlc_video_set_subtitle_file(mp, f);
+        };
+        list.append({ n, s });
+        s();
+    }
 }
 
 void VPlayer::event(int type)

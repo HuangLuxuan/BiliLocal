@@ -69,7 +69,7 @@ Load::Load(QObject *parent)
 	Q_D(Load);
 	setObjectName("Load");
 
-	auto avProcess = [this](QNetworkReply *reply){
+    auto avProcess = [this](QNetworkReply *reply){
 		Q_D(Load);
 		Task &task = d->queue.head();
 		int sharp = task.code.indexOf(QRegularExpression("[#_]"));
@@ -78,11 +78,12 @@ Load::Load(QObject *parent)
 		{
 			QString i = task.code.mid(2, sharp - 2);
 			QString p = sharp == -1 ? QString() : task.code.mid(sharp + 1);
-			QString url("http://www.%1/video/av%2/");
+            //QString url("http://www.%1/video/av%2/");
+            QString url("https://api.%1/x/web-interface/view?aid=%2");
 			url = url.arg(Utils::customUrl(Utils::Bilibili)).arg(i);
-			if (!p.isEmpty()){
-				url += QString("index_%1.html").arg(p);
-			}
+            /*if (!p.isEmpty()){
+                url += QString("index_%1.html").arg(p);
+            }*/
 			forward(QNetworkRequest(url), Page);
 			break;
 		}
@@ -90,12 +91,14 @@ Load::Load(QObject *parent)
 		{
 			d->model->clear();
 			QString api, id, video(reply->readAll());
-			int part = video.indexOf("<select");
+            //int part = video.indexOf("<select");
+            int part = video.indexOf("\"pages\"");
 			if (part != -1 && sharp == -1){
-				QRegularExpression r("(?<=>).*?(?=</option>)");
-				QStringRef list(&video, part, video.indexOf("</select>", part) - part);
+                QRegularExpression r("\"cid\"\\s*:\\s*\\d+");//"(?<=>).*?(?=</option>)");
+                QStringRef list(&video, part, video.indexOf(/*"</select>"*/"]", part) - part);
 				QRegularExpressionMatchIterator i = r.globalMatch(list);
-				api = "http://www.%1/video/%2/index_%3.html";
+                //api = "http://www.%1/video/%2/index_%3.html";
+                api = "http://www.%1/video/%2?p=%3";
 				api = api.arg(Utils::customUrl(Utils::Bilibili));
 				while (i.hasNext()){
 					int index = d->model->rowCount() + 1;
@@ -111,7 +114,15 @@ Load::Load(QObject *parent)
 				emit stateChanged(task.state = Part);
 			}
 			else{
-				QRegularExpression r = QRegularExpression("cid[=\":]*\\d+", QRegularExpression::CaseInsensitiveOption);
+                int part=1;
+                if(sharp!=-1){
+                    QString m=QRegularExpression("#\\d+").match(task.code).captured();
+                    m=QRegularExpression("\\d+").match(m).captured();//获得需要分P号
+                    part=std::atol(m.toStdString().c_str());
+                }
+                if(part<1)
+                    part=1;
+                QRegularExpression r = QRegularExpression(/*"cid[=\":]*\\d+"*/ "\"cid\"\\s*:\\s*\\d+", QRegularExpression::CaseInsensitiveOption);
 				QRegularExpressionMatchIterator i = r.globalMatch(video);
 				while (i.hasNext()){
 					QString m = i.next().captured();
@@ -119,10 +130,11 @@ Load::Load(QObject *parent)
 					if (id.isEmpty()){
 						id = m;
 					}
-					else if (id != m){
+                    if(!--part)break;
+                    /*else if (id != m){
 						id.clear();
 						break;
-					}
+                    }*/
 				}
 				if (!id.isEmpty()){
 					api = "http://comment.%1/%2.xml";
@@ -498,6 +510,8 @@ Load::Load(QObject *parent)
 				result = Parse::parseComment(data, Utils::AcfunLocalizer);
 			}
 			result.onFinish([this, load, &task](QVector<Comment> &&r) mutable {
+                if(task.extraFlag==ClearDanmaku)//从Load::loadDanmaku(QString)传递过来的参数
+                    lApp->findObject<Danmaku>()->clear();//本次弹幕解析成功，在这清除之前加载的弹幕就OK了
 				load.danmaku.swap(r);
 				if (task.delay != 0) {
 					load.delay = task.delay;
@@ -791,11 +805,14 @@ bool Load::canHist(const Record *record)
 	return getProc("hist?" + query.toString());
 }
 
-void Load::loadDanmaku(QString code)
+void Load::loadDanmaku(QString code,bool overRideClearDanmaku2NoneFlag)//新增一个boolean可以覆盖掉需要清除已有弹幕的标志
 {
 	const Task &task = codeToTask(code);
-	if (enqueue(task) && Config::getValue("/Load/Clear", false)){
-		lApp->findObject<Danmaku>()->clear();
+    if(Config::getValue("/Load/Clear",false)&&!overRideClearDanmaku2NoneFlag)
+        ((Task*)&task)->extraFlag=ClearDanmaku;//所以要在这里标记一下，传递到Load::Load(QObject*)中的directProc->process那个里面去，
+                                                //可以确保清除成功
+    if (enqueue(task) && Config::getValue("/Load/Clear", false)&&!overRideClearDanmaku2NoneFlag){
+        lApp->findObject<Danmaku>()->clear();//在这清除没用，因为之前加载弹幕的请求还在队列内，没有完成加载
 	}
 }
 

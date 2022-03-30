@@ -1,0 +1,14 @@
+#include <windows.h>
+#include "../src/HelpWindowRes.h"
+
+HelpIntro                   RCDATA PathHelpIntro//"HelpWindowRes\\HelpIntro.rtf"
+HelpCmd                     RCDATA PathHelpCmd//"HelpWindowRes\\HelpCmd.rtf"
+HelpCmdExample              RCDATA PathHelpCmdExample//"HelpWindowRes\\HelpCmdExample.rtf"
+HelpConfigJSON              RCDATA PathHelpConfigJSON
+OpenGLRenderCPP             RCDATA PathOpenGLRenderCPP
+AsyncRasterSpriteCPP        RCDATA PathAsyncRasterSpriteCPP
+THEFUCKINGCURSEDSHITTYQT    RCDATA PathTHEFUCKINGCURSEDSHITTYQT
+ParseCPP                    RCDATA PathParseCPP
+RunningCPP                  RCDATA PathRunningCPP
+HelpFAQ                     RCDATA PathHelpFAQ
+HelpInterface               RCDATA PathHelpInterface

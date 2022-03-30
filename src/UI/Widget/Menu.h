@@ -58,7 +58,7 @@ namespace UI
 		QCompleter *danmC;
 		QPushButton *fileB;
 		QPushButton *danmB;
-		QPushButton *sechB;
+        QPushButton *sechB;
 		QAction *fileA;
 		QAction *danmA;
 		QAction *sechA;

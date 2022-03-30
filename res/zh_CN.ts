@@ -4,7 +4,7 @@
 <context>
     <name>APlayer</name>
     <message>
-        <location filename="../src/Player/VPlayer.cpp" line="589"/>
+        <location filename="../src/Player/VPlayer.cpp" line="619"/>
         <source>Disable</source>
         <translation>关闭</translation>
     </message>
@@ -17,57 +17,123 @@
         <translation>屏蔽</translation>
     </message>
     <message>
-        <location filename="../src/Model/Danmaku.cpp" line="158"/>
+        <location filename="../src/Model/Danmaku.cpp" line="174"/>
         <source>Time</source>
         <translation>时间</translation>
     </message>
     <message>
-        <location filename="../src/Model/Danmaku.cpp" line="161"/>
+        <location filename="../src/Model/Danmaku.cpp" line="177"/>
         <source>Comment</source>
         <translation>评论</translation>
     </message>
 </context>
 <context>
-    <name>Interface</name>
+    <name>Home</name>
     <message>
-        <location filename="../src/UI/Quick2/Interface.qml" line="16"/>
+        <location filename="../src/UI/Quick2/Home.qml" line="25"/>
         <source>Play</source>
         <translation type="unfinished">播放</translation>
     </message>
     <message>
-        <location filename="../src/UI/Quick2/Interface.qml" line="21"/>
+        <location filename="../src/UI/Quick2/Home.qml" line="30"/>
         <source>Stop</source>
         <translation type="unfinished">停止</translation>
     </message>
     <message>
-        <location filename="../src/UI/Quick2/Interface.qml" line="25"/>
+        <location filename="../src/UI/Quick2/Home.qml" line="35"/>
         <source>Open</source>
         <translation type="unfinished">打开</translation>
     </message>
     <message>
-        <location filename="../src/UI/Quick2/Interface.qml" line="29"/>
+        <location filename="../src/UI/Quick2/Home.qml" line="40"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/UI/Quick2/Interface.qml" line="33"/>
+        <location filename="../src/UI/Quick2/Home.qml" line="45"/>
         <source>Prefer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/UI/Quick2/Interface.qml" line="38"/>
+        <location filename="../src/UI/Quick2/Home.qml" line="50"/>
         <source>Quit</source>
         <translation type="unfinished">退出</translation>
     </message>
+</context>
+<context>
+    <name>Info</name>
     <message>
-        <location filename="../src/UI/Quick2/Interface.qml" line="52"/>
+        <location filename="../src/UI/Quick2/Info.qml" line="26"/>
+        <source>Blocked</source>
+        <translation type="unfinished">屏蔽</translation>
+    </message>
+</context>
+<context>
+    <name>Interface</name>
+    <message>
+        <source>Play</source>
+        <translation type="obsolete">播放</translation>
+    </message>
+    <message>
+        <source>Stop</source>
+        <translation type="obsolete">停止</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation type="obsolete">打开</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation type="obsolete">退出</translation>
+    </message>
+    <message>
+        <location filename="../src/UI/Quick2/Interface.qml" line="18"/>
         <source>Open Media</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/UI/Quick2/Interface.qml" line="61"/>
+        <location filename="../src/UI/Quick2/Interface.qml" line="28"/>
         <source>Load Danmaku</source>
         <translation type="unfinished">载入弹幕</translation>
+    </message>
+</context>
+<context>
+    <name>Menu</name>
+    <message>
+        <location filename="../src/UI/Quick2/Menu.qml" line="27"/>
+        <location filename="../src/UI/Quick2/Menu.qml" line="42"/>
+        <source>Open</source>
+        <translation type="unfinished">打开</translation>
+    </message>
+    <message>
+        <location filename="../src/UI/Quick2/Menu.qml" line="42"/>
+        <source>Load</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/UI/Quick2/Menu.qml" line="63"/>
+        <source>Seek</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/UI/Quick2/Menu.qml" line="69"/>
+        <source>Danmaku Alpha</source>
+        <translation type="unfinished">不透明度</translation>
+    </message>
+    <message>
+        <location filename="../src/UI/Quick2/Menu.qml" line="86"/>
+        <source>Local Danmaku</source>
+        <translation type="unfinished">本地弹幕</translation>
+    </message>
+    <message>
+        <location filename="../src/UI/Quick2/Menu.qml" line="103"/>
+        <source>Protect Sub</source>
+        <translation type="unfinished">保护字幕</translation>
+    </message>
+    <message>
+        <location filename="../src/UI/Quick2/Menu.qml" line="120"/>
+        <source>Loop Playback</source>
+        <translation type="unfinished">洗脑循环</translation>
     </message>
 </context>
 <context>
@@ -186,18 +252,18 @@
 <context>
     <name>UI::Editor</name>
     <message>
-        <location filename="../src/UI/Widget/Editor.cpp" line="472"/>
+        <location filename="../src/UI/Widget/Editor.cpp" line="489"/>
         <source>Full</source>
         <translation>全弹装填</translation>
     </message>
     <message>
-        <location filename="../src/UI/Widget/Editor.cpp" line="478"/>
+        <location filename="../src/UI/Widget/Editor.cpp" line="495"/>
         <source>History</source>
         <translation>历史弹幕</translation>
     </message>
     <message>
         <location filename="../src/UI/Widget/Editor.cpp" line="79"/>
-        <location filename="../src/UI/Widget/Editor.cpp" line="523"/>
+        <location filename="../src/UI/Widget/Editor.cpp" line="540"/>
         <source>Delete</source>
         <translation>删除</translation>
     </message>
@@ -217,12 +283,12 @@
         <translation>分离</translation>
     </message>
     <message>
-        <location filename="../src/UI/Widget/Editor.cpp" line="586"/>
+        <location filename="../src/UI/Widget/Editor.cpp" line="597"/>
         <source>Delay: %1s</source>
         <translation>延迟: %1s</translation>
     </message>
     <message>
-        <location filename="../src/UI/Widget/Editor.cpp" line="652"/>
+        <location filename="../src/UI/Widget/Editor.cpp" line="663"/>
         <source>Editor</source>
         <translation>编辑</translation>
     </message>
@@ -235,42 +301,42 @@
         <translation>退出</translation>
     </message>
     <message>
-        <location filename="../src/UI/Widget/Home.cpp" line="238"/>
+        <location filename="../src/UI/Widget/Home.cpp" line="243"/>
         <source>Full Screen</source>
         <translation>全屏</translation>
     </message>
     <message>
-        <location filename="../src/UI/Widget/Home.cpp" line="255"/>
+        <location filename="../src/UI/Widget/Home.cpp" line="265"/>
         <source>Block All</source>
         <translation>关闭弹幕</translation>
     </message>
     <message>
-        <location filename="../src/UI/Widget/Home.cpp" line="247"/>
+        <location filename="../src/UI/Widget/Home.cpp" line="257"/>
         <source>Config</source>
         <translation>设置</translation>
     </message>
     <message>
-        <location filename="../src/UI/Widget/Home.cpp" line="283"/>
+        <location filename="../src/UI/Widget/Home.cpp" line="293"/>
         <source>Post Danmaku</source>
         <translation>发送弹幕</translation>
     </message>
     <message>
-        <location filename="../src/UI/Widget/Home.cpp" line="319"/>
+        <location filename="../src/UI/Widget/Home.cpp" line="329"/>
         <source>Delay</source>
         <translation>延迟弹幕</translation>
     </message>
     <message>
-        <location filename="../src/UI/Widget/Home.cpp" line="323"/>
+        <location filename="../src/UI/Widget/Home.cpp" line="333"/>
         <source>Ahead</source>
         <translation>提前弹幕</translation>
     </message>
     <message>
-        <location filename="../src/UI/Widget/Home.cpp" line="304"/>
+        <location filename="../src/UI/Widget/Home.cpp" line="314"/>
         <source>Forward</source>
         <translation>前进</translation>
     </message>
     <message>
-        <location filename="../src/UI/Widget/Home.cpp" line="451"/>
+        <location filename="../src/UI/Widget/Home.cpp" line="461"/>
         <source>Loading</source>
         <translation>载入</translation>
     </message>
@@ -290,68 +356,68 @@
         <translation>也许登陆可以解决问题</translation>
     </message>
     <message>
-        <location filename="../src/UI/Widget/Home.cpp" line="275"/>
+        <location filename="../src/UI/Widget/Home.cpp" line="285"/>
         <source>Playlist</source>
         <translation>播放列表</translation>
     </message>
     <message>
-        <location filename="../src/UI/Widget/Home.cpp" line="310"/>
+        <location filename="../src/UI/Widget/Home.cpp" line="320"/>
         <source>Backward</source>
         <translation>后退</translation>
     </message>
     <message>
-        <location filename="../src/UI/Widget/Home.cpp" line="337"/>
+        <location filename="../src/UI/Widget/Home.cpp" line="347"/>
         <source>VolUp</source>
         <translation>提高音量</translation>
     </message>
     <message>
-        <location filename="../src/UI/Widget/Home.cpp" line="341"/>
+        <location filename="../src/UI/Widget/Home.cpp" line="351"/>
         <source>VolDn</source>
         <translation>降低音量</translation>
     </message>
     <message>
-        <location filename="../src/UI/Widget/Home.cpp" line="348"/>
+        <location filename="../src/UI/Widget/Home.cpp" line="358"/>
         <source>Last Media</source>
         <translation>上一个</translation>
     </message>
     <message>
-        <location filename="../src/UI/Widget/Home.cpp" line="352"/>
+        <location filename="../src/UI/Widget/Home.cpp" line="362"/>
         <source>Next Media</source>
         <translation>下一个</translation>
     </message>
     <message>
-        <location filename="../src/UI/Widget/Home.cpp" line="359"/>
+        <location filename="../src/UI/Widget/Home.cpp" line="369"/>
         <source>SpeedUp</source>
         <translation>加速播放</translation>
     </message>
     <message>
-        <location filename="../src/UI/Widget/Home.cpp" line="363"/>
+        <location filename="../src/UI/Widget/Home.cpp" line="373"/>
         <source>SpeedDn</source>
         <translation>减速播放</translation>
     </message>
     <message>
-        <location filename="../src/UI/Widget/Home.cpp" line="370"/>
+        <location filename="../src/UI/Widget/Home.cpp" line="380"/>
         <source>Reset</source>
         <translation>复位</translation>
     </message>
     <message>
-        <location filename="../src/UI/Widget/Home.cpp" line="399"/>
+        <location filename="../src/UI/Widget/Home.cpp" line="409"/>
         <source>Init Size</source>
         <translation>初始大小</translation>
     </message>
     <message>
-        <location filename="../src/UI/Widget/Home.cpp" line="423"/>
+        <location filename="../src/UI/Widget/Home.cpp" line="433"/>
         <source>Speed</source>
         <translation>速度</translation>
     </message>
     <message>
-        <location filename="../src/UI/Widget/Home.cpp" line="730"/>
+        <location filename="../src/UI/Widget/Home.cpp" line="743"/>
         <source>Update</source>
         <translation>更新</translation>
     </message>
     <message>
         <location filename="../src/UI/Widget/Home.cpp" line="54"/>
-        <location filename="../src/UI/Widget/Home.cpp" line="806"/>
+        <location filename="../src/UI/Widget/Home.cpp" line="819"/>
         <source>Sync</source>
         <translation>同步</translation>
     </message>
@@ -371,83 +437,83 @@
         <translation>滞后%1秒</translation>
     </message>
     <message>
-        <location filename="../src/UI/Widget/Home.cpp" line="753"/>
+        <location filename="../src/UI/Widget/Home.cpp" line="766"/>
         <source>Copy</source>
         <translation>复制</translation>
     </message>
     <message>
-        <location filename="../src/UI/Widget/Home.cpp" line="768"/>
+        <location filename="../src/UI/Widget/Home.cpp" line="781"/>
         <source>Video</source>
         <translation>视频</translation>
     </message>
     <message>
         <location filename="../src/UI/Widget/Home.cpp" line="36"/>
-        <location filename="../src/UI/Widget/Home.cpp" line="800"/>
+        <location filename="../src/UI/Widget/Home.cpp" line="813"/>
         <source>Track</source>
         <translation>轨道</translation>
     </message>
     <message>
-        <location filename="../src/UI/Widget/Home.cpp" line="776"/>
+        <location filename="../src/UI/Widget/Home.cpp" line="789"/>
         <source>Audio</source>
         <translation>音频</translation>
     </message>
     <message>
-        <location filename="../src/UI/Widget/Home.cpp" line="783"/>
+        <location filename="../src/UI/Widget/Home.cpp" line="796"/>
         <source>Subtitle</source>
         <translation>字幕</translation>
     </message>
     <message>
-        <location filename="../src/UI/Widget/Home.cpp" line="798"/>
+        <location filename="../src/UI/Widget/Home.cpp" line="811"/>
         <source>Danmaku</source>
         <translation>弹幕</translation>
     </message>
     <message>
-        <location filename="../src/UI/Widget/Home.cpp" line="812"/>
+        <location filename="../src/UI/Widget/Home.cpp" line="825"/>
         <source>Load</source>
         <translation>加载弹幕</translation>
     </message>
     <message>
-        <location filename="../src/UI/Widget/Home.cpp" line="813"/>
+        <location filename="../src/UI/Widget/Home.cpp" line="826"/>
         <source>Post</source>
         <translation>发送弹幕</translation>
     </message>
     <message>
-        <location filename="../src/UI/Widget/Home.cpp" line="814"/>
+        <location filename="../src/UI/Widget/Home.cpp" line="827"/>
         <source>Seek</source>
         <translation>搜索弹幕</translation>
     </message>
     <message>
-        <location filename="../src/UI/Widget/Home.cpp" line="787"/>
+        <location filename="../src/UI/Widget/Home.cpp" line="800"/>
         <source>Load Subtitle</source>
         <translation>打开字幕</translation>
     </message>
     <message>
-        <location filename="../src/UI/Widget/Home.cpp" line="790"/>
+        <location filename="../src/UI/Widget/Home.cpp" line="803"/>
         <source>Open File</source>
         <translation>打开文件</translation>
     </message>
     <message>
-        <location filename="../src/UI/Widget/Home.cpp" line="792"/>
+        <location filename="../src/UI/Widget/Home.cpp" line="805"/>
         <source>Subtitle files (%1);;All files (*.*)</source>
         <translation>字幕文件 (%1);;所有文件(*.*)</translation>
     </message>
     <message>
-        <location filename="../src/UI/Widget/Home.cpp" line="381"/>
+        <location filename="../src/UI/Widget/Home.cpp" line="391"/>
         <source>Ratio</source>
         <translation>宽高比</translation>
     </message>
     <message>
-        <location filename="../src/UI/Widget/Home.cpp" line="383"/>
+        <location filename="../src/UI/Widget/Home.cpp" line="393"/>
         <source>Default</source>
         <translation>默认</translation>
     </message>
     <message>
-        <location filename="../src/UI/Widget/Home.cpp" line="397"/>
+        <location filename="../src/UI/Widget/Home.cpp" line="407"/>
         <source>Scale</source>
         <translation>缩放</translation>
     </message>
     <message>
-        <location filename="../src/UI/Widget/Home.cpp" line="756"/>
+        <location filename="../src/UI/Widget/Home.cpp" line="769"/>
         <source>Eliminate The Sender</source>
         <translation>屏蔽发送者</translation>
     </message>
@@ -506,7 +572,7 @@
     </message>
     <message>
         <location filename="../src/UI/Widget/Info.cpp" line="108"/>
-        <location filename="../src/UI/Widget/Info.cpp" line="281"/>
+        <location filename="../src/UI/Widget/Info.cpp" line="293"/>
         <source>Play</source>
         <translation>播放</translation>
     </message>
@@ -516,17 +582,17 @@
         <translation>停止</translation>
     </message>
     <message>
-        <location filename="../src/UI/Widget/Info.cpp" line="213"/>
+        <location filename="../src/UI/Widget/Info.cpp" line="210"/>
         <source>Copy Danmaku</source>
         <translation>复制弹幕</translation>
     </message>
     <message>
-        <location filename="../src/UI/Widget/Info.cpp" line="220"/>
+        <location filename="../src/UI/Widget/Info.cpp" line="229"/>
         <source>Eliminate The Sender</source>
         <translation>屏蔽发送者</translation>
     </message>
     <message>
-        <location filename="../src/UI/Widget/Info.cpp" line="230"/>
+        <location filename="../src/UI/Widget/Info.cpp" line="244"/>
         <source>Recover The Sender</source>
         <translation>恢复发送者</translation>
     </message>
@@ -536,17 +602,17 @@
         <translation>全弹幕装填</translation>
     </message>
     <message>
-        <location filename="../src/UI/Widget/Info.cpp" line="242"/>
+        <location filename="../src/UI/Widget/Info.cpp" line="254"/>
         <source>Edit Blocking List</source>
         <translation>编辑屏蔽列表</translation>
     </message>
     <message>
-        <location filename="../src/UI/Widget/Info.cpp" line="245"/>
+        <location filename="../src/UI/Widget/Info.cpp" line="257"/>
         <source>Edit Danmaku Pool</source>
         <translation>编辑弹幕池</translation>
     </message>
     <message>
-        <location filename="../src/UI/Widget/Info.cpp" line="248"/>
+        <location filename="../src/UI/Widget/Info.cpp" line="260"/>
         <source>Clear Danmaku Pool</source>
         <translation>清除弹幕池</translation>
     </message>
@@ -571,7 +637,7 @@
         <translation>Bilibili弹幕格式 (*.xml)</translation>
     </message>
     <message>
-        <location filename="../src/UI/Widget/Info.cpp" line="281"/>
+        <location filename="../src/UI/Widget/Info.cpp" line="293"/>
         <source>Pause</source>
         <translation>暂停</translation>
     </message>

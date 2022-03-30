@@ -375,8 +375,8 @@ QDialog(parent)
 
 		auto l = new QHBoxLayout;
 		loca = new QComboBox(widget[1]);
-		loca->addItem("English", QString());
-		for (const QFileInfo &info : QDir("./locale/").entryInfoList(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot)){
+        loca->addItem("English", QString());
+        for (const QFileInfo &info : QDir(/*"./locale/"*/Utils::localPath(Utils::Locale)).entryInfoList(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot)){
 			QLocale l(info.baseName());
 			QString name = l.name();
 			QString text = l.nativeLanguageName();
